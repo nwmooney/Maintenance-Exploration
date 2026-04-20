@@ -24,7 +24,7 @@ CMX is intentionally aligned to the “connected maintenance” model seen in pl
 
  - 3) Faster, more accurate financial linkage (Invoices → Work Orders)
 
-        CMX treats invoices and supporting documents as first-class inputs that become structured work-order outcomes—consistent with the reality that maintenance modernization includes invoice processing and work order integration patterns (ex. extracting invoice values and             applying them to work orders).
+        CMX treats invoices and supporting documents as first-class inputs that become structured work-order outcomes that are consistent with the reality that maintenance modernization includes invoice processing and work order integration patterns (ex. extracting invoice values and             applying them to work orders).
 
 # The GAP
 Maintenance teams lose time and accuracy when operational signals (defects, faults, inspections, vendor status) and financial artifacts (invoices) do not translate cleanly into actionable, standardized work orders and outcomes. Connected platforms solve this by turning inspections into work orders quickly and consolidating outstanding maintenance items into fewer visits, while also using automation to reduce invoice and paperwork processing.
