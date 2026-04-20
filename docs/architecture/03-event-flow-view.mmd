@@ -1,0 +1,77 @@
+sequenceDiagram
+    participant Source as Event Source
+    participant Bus as Event Bus
+    participant Handler as Event Handler
+    participant State as State Store
+    
+    Source->>Bus: Publish Event
+    Bus->>Handler: Dispatch
+    Handler->>State: Update State
+    State-->>Handler: Confirmation
+    Handler-->>Bus: ACK
+    Bus-->>Source: Complete
+
+sequenceDiagram
+autonumber
+
+participant Driver as Driver/Tech
+participant Intake as Signal Intake Agents
+participant CMX as CMX Execution
+participant Control as Policy/Exception Layer
+participant SoR as Systems of Record
+participant Maximo as Maximo
+participant Finance as Finance/ERP
+
+%% ---------------------------
+%% FLOW 1: Defect → Work Order
+%% ---------------------------
+rect rgb(235, 245, 255)
+note over Driver,SoR: Flow 1 — DVIR Defect → WO Draft → Approval → WO Created
+Driver->>Intake: defect reported (voice/text)
+Intake->>CMX: cmx.defect.reported.v1
+CMX->>CMX: cmx.workOrder.drafted.v1
+CMX->>Control: cmx.policy.approvalRequired.v1
+Control-->>CMX: cmx.policy.approved.v1
+CMX->>CMX: cmx.workOrder.created.v1
+CMX->>SoR: cmx.sor.maximoUpdateRequested.v1
+SoR-->>Maximo: update work order (governed)
+SoR-->>CMX: cmx.sor.maximoUpdateSucceeded.v1
+end
+
+%% ---------------------------
+%% FLOW 2: Invoice → Validate → Post → Maximo Update
+%% ---------------------------
+rect rgb(245, 255, 235)
+note over Driver,Finance: Flow 2 — Scan/Upload Invoice → Extract → Validate → Post
+Driver->>Intake: upload invoice / image
+Intake->>CMX: cmx.document.uploaded.v1
+CMX->>CMX: cmx.invoice.extracted.v1
+CMX->>CMX: cmx.invoice.matchedToWorkOrder.v1
+CMX->>Control: validate required fields / duplicates
+alt validation fails
+  Control-->>CMX: cmx.invoice.validationFailed.v1
+  Control-->>CMX: cmx.exception.raised.v1
+else validation ok
+  CMX->>CMX: cmx.invoice.posted.v1
+  CMX->>SoR: cmx.sor.financePostRequested.v1
+  SoR-->>Finance: post payable/accrual (governed)
+  SoR-->>CMX: cmx.sor.financePostSucceeded.v1
+  CMX->>SoR: cmx.sor.maximoUpdateRequested.v1
+  SoR-->>Maximo: update WO costs/ref invoice (governed)
+  SoR-->>CMX: cmx.sor.maximoUpdateSucceeded.v1
+end
+end
+
+%% ---------------------------
+%% FLOW 3: Warranty/Claim → Submission
+%% ---------------------------
+rect rgb(255, 245, 235)
+note over Driver,SoR: Flow 3 — WO Completed → Warranty Candidate → Submission
+CMX->>CMX: cmx.workOrder.completed.v1
+CMX->>CMX: cmx.warranty.candidateIdentified.v1
+CMX->>Control: approval threshold check
+Control-->>CMX: cmx.policy.approved.v1
+CMX->>CMX: cmx.warranty.submissionPrepared.v1
+CMX->>SoR: cmx.warranty.submitted.v1 (governed service)
+SoR-->>CMX: cmx.claim.statusUpdated.v1
+end

@@ -1,0 +1,49 @@
+
+CMX One Architecture (Execution + Enterprise + Open Integration)
+This diagram represents Connected Maintenance 360 (CMX) as a system of execution that sits between real‑world signals and enterprise systems, while exposing an open integration layer (CMX Connect) for partners and future CMXs.
+
+
+AI‑First Architecture Principle
+
+CMX uses AI as a system of action, not a system of answers.
+
+Agents are mapped to specific layers of the architecture and have clearly scoped autonomy. This avoids “chat‑only AI” and ensures every agent produces operational outcomes.
+High‑Level Architecture Layers (AI‑Mapped)
+1) Signal & Input Layer (Where Work Starts)
+AI Agents at this layer: Signal Intake Agents
+Primary responsibilities:
+
+Normalize raw inputs into structured events
+Reduce human data capture
+Prevent noisy or duplicate inputs
+Agents:
+
+Driver Defect Intake Agent – structures DVIRs, breakdowns, and free‑text notes
+Vendor Status Capture Agent – voice/email agent to capture vendor status updates
+Document Understanding Agent – parses scanned docs/images/invoices into structured data (supports invoice processing)
+
+
+2) CMX Execution Layer (The Product)
+AI Agents at this layer: Execution Agents
+Agents:
+
+Maintenance Triage Agent – proposes required work + urgency (uses repair history + signals)
+Work Order Builder Agent – drafts/updates WOs; bundles items into a single visit
+Technician Assist Agent – guided diagnostics + past similar repair insights
+Invoice Reconciliation Agent – matches invoice → WO; validates costs before posting (vendor invoice processing)
+Warranty & Claims Agent – identifies warranty/subrogation candidates; prepares submissions
+
+
+3) CMX Platform Services
+AI Agents at this layer: Control & Policy Agents
+Purpose:
+
+Keep autonomy safe, auditable, reversible
+Agents:
+
+Policy Guardrail Agent – enforces thresholds, approvals, safety rules
+Exception Detection Agent – escalates edge cases (e.g., duplicate invoice, missing required values)
+Observability & Learning Agent – tracks decisions, outcomes, and feedback loops
+This aligns to the enterprise practice of sharply defining AI roles and controlling access through security/governance.
+
+

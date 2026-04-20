@@ -1,0 +1,87 @@
+graph LR
+    subgraph "Autonomous Agents"
+        Assessment["Assessment Agent"]
+        Planning["Planning Agent"]
+        Execution["Execution Agent"]
+        Monitoring["Monitoring Agent"]
+    end
+    
+    Assessment -->|insights| Planning
+    Planning -->|schedules| Execution
+    Execution -->|status| Monitoring
+    Monitoring -->|feedback| Assessment
+
+graph TD
+
+%% ---------------------------
+%% CMX AGENT VIEW (Mapped)
+%% ---------------------------
+
+subgraph Intake[Signal Intake Agents]
+  A1["Driver Defect Intake Agent\n(DVIR / Voice / Notes)"]
+  A2["Vendor Status Capture Agent\n(Voice / Email)"]
+  A3["Document Understanding Agent\n(Scan/Upload → Structured Data)"]
+end
+
+subgraph Exec[Execution Agents]
+  B1["Maintenance Triage Agent\n(Work Needed + Urgency)"]
+  B2["Work Order Builder Agent\n(Draft/Update/Bundle)"]
+  B3["Technician Assist Agent\n(Diagnostics + Guidance)"]
+  B4["Invoice Reconciliation Agent\n(Match + Validate)"]
+  B5["Warranty & Claims Agent\n(Eligibility + Prep)"]
+end
+
+subgraph Control[Control & Policy Agents]
+  C1["Policy Guardrail Agent\n(Thresholds + Approvals)"]
+  C2["Exception Detection Agent\n(Escalate Edge Cases)"]
+  C3["Observability & Learning Agent\n(Outcomes + Feedback)"]
+end
+
+subgraph CMX[CMX Product Surfaces]
+  D1[Maintenance Status Hub]
+  D2[Work Order Orchestration]
+  D3[Invoice Automation]
+  D4[Warranty / Claims]
+end
+
+subgraph SoR["Systems of Record (Non-authoritative AI)"]
+  E1["Maximo\n(Work Orders / Asset Record)"]
+  E2["Finance / ERP\n(Postings)"]
+  E3[Docs / Audit Store]
+end
+
+subgraph Connect[CMX Connect]
+  F1["Integration Mediation Agent\n(Schema Translation)"]
+  F2[Partner Systems / CMXs]
+end
+
+%% Intake → CMX
+A1 --> D1
+A2 --> D1
+A3 --> D3
+
+%% Execution inside CMX
+D1 --> B1
+B1 --> B2
+B2 --> D2
+D2 --> B3
+D3 --> B4
+D4 --> B5
+
+%% Control overlay
+B2 --> C1
+B4 --> C1
+B5 --> C1
+C2 --> D2
+C2 --> D3
+C3 --> D1
+
+%% Governed outputs to SoR
+C1 -->|approval required| D2
+D2 -->|governed update request| E1
+D3 -->|governed post request| E2
+D3 -->|audit doc| E3
+
+%% Connect layer
+D1 --> F1
+F1 --> F2

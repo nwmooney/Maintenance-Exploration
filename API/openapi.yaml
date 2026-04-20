@@ -1,0 +1,21 @@
+
+openapi: 3.0.1
+info:
+  title: CMX Connect API
+  version: 0.1.0
+  description: >
+    Open integration surface for Connected CMX Maintenance.
+
+paths:
+  /work-orders:
+    post:
+      summary: Create a maintenance work order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkOrder'
+      responses:
+        '201':
+          description: Work order created

@@ -1,0 +1,63 @@
+graph TD
+
+%% ---------------------------
+%% CMX SYSTEM VIEW (Layered)
+%% ---------------------------
+
+subgraph S[Signal & Input Layer]
+  A[Drivers / Technicians<br/>Mobile + Tablet]
+  B[Telematics & IoT<br/>Fault Codes / Sensor Events]
+  C[Vendors / Road Service<br/>Status + Invoices]
+  D[Documents<br/>Scan / Upload / Email / Images]
+end
+
+subgraph X[CMX Execution Layer - Product]
+  E[Maintenance Status Hub]
+  F[Work Order Orchestration]
+  G[Invoice → Work Order Automation]
+  H[Warranty / Claims / Subrogation]
+end
+
+subgraph P[CMX Platform Services]
+  I[Event Engine]
+  J[Rules & Policy Engine]
+  K[Identity & Security<br/>Security 360]
+  L[Audit & Observability]
+end
+
+subgraph R[Enterprise Systems of Record]
+  M[Maximo<br/>System of Record]
+  N[Finance / ERP<br/>Costs + Accruals + Payments]
+  O[Documents / Audit Store]
+  Q[Analytics & Reporting<br/>Power BI / Databricks]
+end
+
+subgraph OI[CMX Connect - Open Integration]
+  Z[CMX Connect APIs<br/>REST + Events]
+  Z1[Partner Systems / CMXs]
+  Z2[External Tools]
+end
+
+A -->|defects / requests| E
+B -->|fault events| E
+C -->|status / invoices| E
+D -->|documents| G
+
+E --> F
+F --> G
+F --> H
+
+E --> I
+F --> I
+G --> I
+H --> I
+
+I --> J
+I --> L
+J --> K
+
+P -->|governed updates| R
+
+E --> Z
+Z --> Z1
+Z --> Z2
