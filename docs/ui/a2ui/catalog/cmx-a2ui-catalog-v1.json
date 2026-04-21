@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "catalogId": "cmx-a2ui-catalog-v1",
+  "description": "CMX A2UI Catalog v1 — Maintenance, Work Orders, Approvals",
+  "components": {
+    "CMXCard": { "$ref": "./components/cards.json#/CMXCard" },
+    "StatusBadge": { "$ref": "./components/status.json#/StatusBadge" },
+    "ActionBar": { "$ref": "./components/actions.json#/ActionBar" },
+    "CommandButton": { "$ref": "./components/actions.json#/CommandButton" },
+    "CMXList": { "$ref": "./components/lists.json#/CMXList" },
+    "KeyValueList": { "$ref": "./components/lists.json#/KeyValueList" },
+    "Timeline": { "$ref": "./components/timeline.json#/Timeline" }
+  },
+  "functions": [
+    "emitCommand",
+    "navigate"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,22 @@
+{
+  "StatusBadge": {
+    "type": "object",
+    "description": "Event-derived status indicator",
+    "properties": {
+      "value": {
+        "type": "string",
+        "enum": [
+          "New",
+          "Draft",
+          "NeedsApproval",
+          "Approved",
+          "Open",
+          "Completed",
+          "Exception"
+        ]
+      }
+    },
+    "required": ["value"],
+    "additionalProperties": false
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "CMXList": {
+    "type": "object",
+    "description": "Simple vertical list (suggestions, context)",
+    "properties": {
+      "items": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    },
+    "required": ["items"],
+    "additionalProperties": false
+  },
+
+  "KeyValueList": {
+    "type": "object",
+    "description": "Structured key/value display",
+    "properties": {
+      "entries": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "key": { "type": "string" },
+            "value": { "type": "string" }
+          },
+          "required": ["key", "value"]
+        }
+      }
+    },
+    "required": ["entries"],
+    "additionalProperties": false
+  }
+}

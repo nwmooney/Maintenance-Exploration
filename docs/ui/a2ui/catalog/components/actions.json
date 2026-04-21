@@ -1,0 +1,31 @@
+{
+  "ActionBar": {
+    "type": "object",
+    "description": "Horizontal command container (max 3 primary actions)",
+    "properties": {
+      "actions": {
+        "type": "array",
+        "items": { "$ref": "#/CommandButton" },
+        "maxItems": 3
+      }
+    },
+    "required": ["actions"],
+    "additionalProperties": false
+  },
+
+  "CommandButton": {
+    "type": "object",
+    "description": "Command-mapped button (OpenAPI only)",
+    "properties": {
+      "label": { "type": "string" },
+      "intent": {
+        "type": "string",
+        "pattern": "^(GET|POST|PUT|DELETE)\\s\\/.*"
+      },
+      "roleRequired": { "type": "string" },
+      "confirmation": { "type": "string" }
+    },
+    "required": ["label", "intent"],
+    "additionalProperties": false
+  }
+}

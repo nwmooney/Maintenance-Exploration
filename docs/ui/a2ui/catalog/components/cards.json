@@ -1,0 +1,26 @@
+{
+  "CMXCard": {
+    "type": "object",
+    "description": "Primary CMX card — defects, work orders, approvals",
+    "properties": {
+      "title": { "type": "string" },
+      "status": {
+        "type": "string",
+        "enum": [
+          "New",
+          "Draft",
+          "NeedsApproval",
+          "Approved",
+          "Open",
+          "Completed",
+          "Exception"
+        ]
+      },
+      "assetId": { "type": "string" },
+      "timestamp": { "type": "string", "format": "date-time" },
+      "summary": { "type": "string" }
+    },
+    "required": ["title", "status", "assetId"],
+    "additionalProperties": false
+  }
+}

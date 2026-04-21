@@ -1,0 +1,21 @@
+{
+  "Timeline": {
+    "type": "object",
+    "description": "Read-only event timeline",
+    "properties": {
+      "events": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "label": { "type": "string" },
+            "timestamp": { "type": "string", "format": "date-time" }
+          },
+          "required": ["label", "timestamp"]
+        }
+      }
+    },
+    "required": ["events"],
+    "additionalProperties": false
+  }
+}
