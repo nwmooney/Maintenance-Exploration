@@ -1,0 +1,246 @@
+asyncapi: '2.6.0'
+info:
+  title: CMX Connect Event API
+  version: '1.0.0'
+  description: |
+    CMX Connect AsyncAPI definition.
+    Defines the event-driven integration surface for Connected Maintenance 360 (CMX).
+
+    Principles:
+    - Events are immutable facts
+    - APIs express intent (commands)
+    - Systems of Record are updated via governed services only
+    - External consumers subscribe; CMX publishes
+
+defaultContentType: application/json
+
+servers:
+  nonprod:
+    url: kafka.nonprod.jbhunt.com:9092
+    protocol: kafka
+    description: Non-production CMX event bus
+  prod:
+    url: kafka.prod.jbhunt.com:9092
+    protocol: kafka
+    description: Production CMX event bus
+
+tags:
+  - name: defects
+  - name: workorders
+  - name: invoices
+  - name: warranty
+  - name: policy
+  - name: systems-of-record
+
+channels:
+
+  cmx.defects.v1:
+    description: Defect and inspection lifecycle events
+    publish:
+      operationId: publishDefectEvents
+      tags: [defects]
+      message:
+        oneOf:
+          - $ref: '#/components/messages/DefectReported'
+          - $ref: '#/components/messages/DefectClassified'
+          - $ref: '#/components/messages/DefectResolved'
+
+  cmx.faults.v1:
+    description: Telematics and diagnostic fault events
+    publish:
+      operationId: publishFaultEvents
+      tags: [defects]
+      message:
+        oneOf:
+          - $ref: '#/components/messages/FaultDetected'
+          - $ref: '#/components/messages/FaultEnriched'
+          - $ref: '#/components/messages/FaultSuppressed'
+
+  cmx.workorders.v1:
+    description: Work order lifecycle and execution events
+    publish:
+      operationId: publishWorkOrderEvents
+      tags: [workorders]
+      message:
+        oneOf:
+          - $ref: '#/components/messages/WorkOrderDrafted'
+          - $ref: '#/components/messages/WorkOrderCreated'
+          - $ref: '#/components/messages/WorkOrderBundled'
+          - $ref: '#/components/messages/WorkOrderCompleted'
+
+  cmx.documents.v1:
+    description: Document ingestion and classification events
+    publish:
+      operationId: publishDocumentEvents
+      tags: [invoices]
+      message:
+        oneOf:
+          - $ref: '#/components/messages/DocumentUploaded'
+          - $ref: '#/components/messages/DocumentClassified'
+
+  cmx.invoices.v1:
+    description: Invoice extraction, validation, and posting events
+    publish:
+      operationId: publishInvoiceEvents
+      tags: [invoices]
+      message:
+        oneOf:
+          - $ref: '#/components/messages/InvoiceExtracted'
+          - $ref: '#/components/messages/InvoiceMatched'
+          - $ref: '#/components/messages/InvoiceValidationFailed'
+          - $ref: '#/components/messages/InvoicePosted'
+
+  cmx.warranty.v1:
+    description: Warranty, claims, and subrogation events
+    publish:
+      operationId: publishWarrantyEvents
+      tags: [warranty]
+      message:
+        oneOf:
+          - $ref: '#/components/messages/WarrantyCandidateIdentified'
+          - $ref: '#/components/messages/WarrantySubmitted'
+          - $ref: '#/components/messages/ClaimStatusUpdated'
+
+  cmx.policy.v1:
+    description: Policy, approval, and exception events
+    publish:
+      operationId: publishPolicyEvents
+      tags: [policy]
+      message:
+        oneOf:
+          - $ref: '#/components/messages/PolicyApprovalRequired'
+          - $ref: '#/components/messages/PolicyApproved'
+          - $ref: '#/components/messages/ExceptionRaised'
+
+  cmx.sor.v1:
+    description: Governed Systems-of-Record update requests and results
+    publish:
+      operationId: publishSoREvents
+      tags: [systems-of-record]
+      message:
+        oneOf:
+          - $ref: '#/components/messages/MaximoUpdateRequested'
+          - $ref: '#/components/messages/MaximoUpdateSucceeded'
+          - $ref: '#/components/messages/FinancePostRequested'
+          - $ref: '#/components/messages/FinancePostSucceeded'
+
+components:
+
+  schemas:
+
+    EventEnvelope:
+      type: object
+      required:
+        - eventId
+        - eventType
+        - occurredAt
+        - source
+        - correlation
+        - payload
+      properties:
+        eventId:
+          type: string
+          format: uuid
+        eventType:
+          type: string
+        occurredAt:
+          type: string
+          format: date-time
+        source:
+          type: object
+          properties:
+            system:
+              type: string
+              example: cmx
+            component:
+              type: string
+            tenant:
+              type: string
+              example: jbh
+        correlation:
+          type: object
+          properties:
+            correlationId:
+              type: string
+              format: uuid
+            causationId:
+              type: string
+              format: uuid
+        payload:
+          type: object
+
+  messages:
+
+    DefectReported:
+      name: DefectReported
+      title: Defect Reported
+      summary: A defect was reported by a driver, technician, or intake agent
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - properties:
+              payload:
+                type: object
+                properties:
+                  defectId:
+                    type: string
+                  assetId:
+                    type: string
+                  source:
+                    type: string
+                    example: dvir
+
+    WorkOrderCreated:
+      name: WorkOrderCreated
+      title: Work Order Created
+      summary: A work order was created after approval
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - properties:
+              payload:
+                type: object
+                properties:
+                  workOrderId:
+                    type: string
+                  assetId:
+                    type: string
+                  approvalType:
+                    type: string
+                    example: policy-threshold
+
+    InvoiceExtracted:
+      name: InvoiceExtracted
+      title: Invoice Extracted
+      summary: Invoice fields extracted from uploaded document
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - properties:
+              payload:
+                type: object
+                properties:
+                  invoiceId:
+                    type: string
+                  workOrderId:
+                    type: string
+                  confidence:
+                    type: number
+                    format: float
+
+    PolicyApprovalRequired:
+      name: PolicyApprovalRequired
+      title: Policy Approval Required
+      summary: Execution requires human or threshold approval
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - properties:
+              payload:
+                type: object
+                properties:
+                  reason:
+                    type: string
+                  threshold:
+                    type: string
+``

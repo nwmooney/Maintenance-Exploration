@@ -1,0 +1,56 @@
+graph TD
+
+%% =========================================
+%% CMX INTEGRATION CONTRACTS
+%% =========================================
+
+subgraph Producers[Integration Producers]
+  U[Users / Mobile Apps]
+  V[Vendors]
+  S[External Systems]
+end
+
+subgraph CMX[CMX Connect]
+  API[REST APIs\nCommands (Intent)]
+  EVT[Event Streams\nFacts]
+end
+
+subgraph Consumers[Integration Consumers]
+  P[Partner Systems]
+  A[Analytics / BI]
+  G[SoR Gateways\n(Governed)]
+end
+
+%% -------- Commands --------
+U -->|POST /defects| API
+U -->|POST /documents| API
+V -->|POST /invoices| API
+S -->|POST /work-orders/*| API
+
+%% -------- Event Emission --------
+API -->|emit facts| EVT
+
+%% -------- Native Event Producers --------
+S -->|fault detected| EVT
+
+%% -------- Fan-out --------
+EVT -->|subscribe| P
+EVT -->|subscribe| A
+EVT -->|request updates| G
+
+%% -------- Contract Rules --------
+note right of API
+  REST APIs:
+  • Express intent
+  • Validate input
+  • Enforce auth & policy
+  • Never guarantee completion
+end
+
+note right of EVT
+  Events:
+  • Immutable facts
+  • Asynchronous
+  • Replayable
+  • System-of-record safe
+end

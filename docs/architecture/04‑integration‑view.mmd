@@ -1,0 +1,54 @@
+graph LR
+
+%% =========================================
+%% CMX INTEGRATION VIEW (TOPOLOGY)
+%% =========================================
+
+subgraph Producers[External Producers]
+  D[Drivers / Technicians\nMobile, Voice]
+  T[Telematics Providers\nFault Codes / Health]
+  V[Vendors / Road Service\nStatus, Invoices]
+end
+
+subgraph CMX[CMX Core]
+  API[CMX Connect\nREST APIs\n(Command / Intent)]
+  EVT[CMX Event Bus\n(Domain Events)]
+end
+
+subgraph Gov[Governance & Control]
+  SEC[Security 360\nAuthN / AuthZ]
+  POL[Policy Enforcement\nThresholds]
+  AUD[Audit & Observability]
+end
+
+subgraph Consumers[External Consumers]
+  P[Partner Systems\nPartner CMXs]
+  A[Analytics / Data Platform]
+end
+
+subgraph SoR[Enterprise Systems of Record]
+  M[Maximo\nWork Orders / Assets]
+  F[Finance / ERP\nPayables, Accruals]
+  DMS[Enterprise Docs / Audit Store]
+end
+
+%% -------- Inbound Integration --------
+D -->|commands| API
+V -->|commands| API
+T -->|events| EVT
+
+%% -------- CMX Internal Routing --------
+API --> EVT
+
+%% -------- Governance Overlay --------
+API --> SEC
+API --> POL
+EVT --> AUD
+
+%% -------- Outbound Integration --------
+EVT -->|subscribe| P
+EVT -->|subscribe| A
+
+%% -------- Governed SoR Updates --------
+EVT -->|update requests| SoR
+SoR -->|outcome events| EVT
