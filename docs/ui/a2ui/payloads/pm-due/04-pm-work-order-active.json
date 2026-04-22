@@ -1,0 +1,28 @@
+{
+  "type": "surface",
+  "id": "pm_wo_active_surface",
+  "components": [
+    {
+      "type": "CMXCard",
+      "title": "PM Work Order Active",
+      "status": "Open",
+      "assetId": "{{assetId}}",
+      "summary": "{{pmType}} maintenance in progress"
+    },
+    {
+      "type": "ActionBar",
+      "actions": [
+        {
+          "type": "CommandButton",
+          "label": "Assign Technician",
+          "intent": "POST /work-orders/{{workOrderId}}/assign"
+        },
+        {
+          "type": "CommandButton",
+          "label": "Schedule",
+          "intent": "POST /work-orders/{{workOrderId}}/schedule"
+        }
+      ]
+    }
+  ]
+}

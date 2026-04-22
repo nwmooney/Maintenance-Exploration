@@ -1,0 +1,68 @@
+{
+  "bundleId": "cmx-a2ui-runtime-bundle-v1",
+  "version": "1.0.0",
+  "generatedAt": "2026-04-21T20:59:45Z",
+  "catalog": {
+    "$ref": "../../docs/ui/a2ui/catalog/cmx-a2ui-catalog-v1.json"
+  },
+  "payloads": {
+    "defect_to_work_order": [
+      {
+        "event": "cmx.defect.reported.v1",
+        "payload": "../../docs/ui/a2ui/payloads/defect-to-wo/01-defect-reported.json"
+      },
+      {
+        "event": "cmx.workOrder.drafted.v1",
+        "payload": "../../docs/ui/a2ui/payloads/defect-to-wo/02-work-order-drafted.json"
+      },
+      {
+        "event": "cmx.policy.approvalRequired.v1",
+        "payload": "../../docs/ui/a2ui/payloads/defect-to-wo/03-approval-required.json"
+      },
+      {
+        "event": "cmx.workOrder.created.v1",
+        "payload": "../../docs/ui/a2ui/payloads/defect-to-wo/04-work-order-active.json"
+      }
+    ],
+    "pm_due_to_complete": [
+      {
+        "event": "cmx.pm.due.v1",
+        "payload": "../../docs/ui/a2ui/payloads/pm-due/01-pm-due.json"
+      },
+      {
+        "event": "cmx.workOrder.drafted.v1",
+        "payload": "../../docs/ui/a2ui/payloads/pm-due/02-pm-work-order-drafted.json"
+      },
+      {
+        "event": "cmx.policy.approvalRequired.v1",
+        "payload": "../../docs/ui/a2ui/payloads/pm-due/03-pm-approval-required.json"
+      },
+      {
+        "event": "cmx.workOrder.created.v1",
+        "payload": "../../docs/ui/a2ui/payloads/pm-due/04-pm-work-order-active.json"
+      },
+      {
+        "event": "cmx.workOrder.completed.v1",
+        "payload": "../../docs/ui/a2ui/payloads/pm-due/05-pm-completed.json"
+      }
+    ],
+    "invoice_exception_to_resolution": [
+      {
+        "event": "cmx.invoice.exceptionDetected.v1",
+        "payload": "../../docs/ui/a2ui/payloads/invoice-exception/01-invoice-exception-detected.json"
+      },
+      {
+        "event": "cmx.invoice.exceptionUnderReview.v1",
+        "payload": "../../docs/ui/a2ui/payloads/invoice-exception/02-invoice-exception-under-review.json"
+      },
+      {
+        "event": "cmx.invoice.exceptionResolutionRequired.v1",
+        "payload": "../../docs/ui/a2ui/payloads/invoice-exception/03-invoice-exception-resolution-required.json"
+      },
+      {
+        "event": "cmx.invoice.exceptionResolved.v1",
+        "payload": "../../docs/ui/a2ui/payloads/invoice-exception/04-invoice-exception-resolved.json"
+      }
+    ]
+  }
+}

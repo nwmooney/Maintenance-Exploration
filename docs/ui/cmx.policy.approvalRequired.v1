@@ -1,0 +1,53 @@
+{
+  "type": "surface",
+  "id": "approval_required_surface",
+  "components": [
+    {
+      "id": "approval_card",
+      "type": "card",
+      "data": {
+        "title": "Approval Required",
+        "status": "Needs Approval",
+        "reason": "{{policyReason}}",
+        "threshold": "{{thresholdExceeded}}",
+        "asset": "{{assetId}}"
+      }
+    },
+    {
+      "id": "approval_context",
+      "type": "list",
+      "data": {
+        "title": "Context",
+        "items": [
+          "Estimated Cost: {{estimatedCost}}",
+          "Severity: {{severity}}",
+          "Recommended Action: {{recommendation}}"
+        ]
+      }
+    },
+    {
+      "id": "approval_actions",
+      "type": "action_bar",
+      "children": [
+        {
+          "id": "approve",
+          "type": "button",
+          "data": {
+            "label": "Approve",
+            "intent": "POST /work-orders/{{workOrderId}}/approve",
+            "roleRequired": "approver"
+          }
+        },
+        {
+          "id": "reject",
+          "type": "button",
+          "data": {
+            "label": "Reject",
+            "intent": "POST /work-orders/{{workOrderId}}/reject",
+            "roleRequired": "approver"
+          }
+        }
+      ]
+    }
+  ]
+}

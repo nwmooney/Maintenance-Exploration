@@ -1,0 +1,35 @@
+{
+  "type": "surface",
+  "id": "pm_approval_required_surface",
+  "components": [
+    {
+      "type": "CMXCard",
+      "title": "PM Approval Required",
+      "status": "NeedsApproval",
+      "assetId": "{{assetId}}",
+      "summary": "{{approvalReason}}"
+    },
+    {
+      "type": "KeyValueList",
+      "entries": [
+        { "key": "Estimated Cost", "value": "{{estimatedCost}}" },
+        { "key": "PM Type", "value": "{{pmType}}" }
+      ]
+    },
+    {
+      "type": "ActionBar",
+      "actions": [
+        {
+          "type": "CommandButton",
+          "label": "Approve",
+          "intent": "POST /work-orders/{{workOrderId}}/approve"
+        },
+        {
+          "type": "CommandButton",
+          "label": "Reject",
+          "intent": "POST /work-orders/{{workOrderId}}/reject"
+        }
+      ]
+    }
+  ]
+}

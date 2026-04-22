@@ -1,0 +1,31 @@
+{
+  "type": "surface",
+  "id": "fallback_unknown_event_surface",
+  "components": [
+    {
+      "type": "CMXCard",
+      "title": "Unsupported Event",
+      "status": "Exception",
+      "assetId": "{{assetId}}",
+      "summary": "No UI surface is defined for event '{{eventType}}'."
+    },
+    {
+      "type": "KeyValueList",
+      "entries": [
+        { "key": "Event Type", "value": "{{eventType}}" },
+        { "key": "Source", "value": "{{eventSource}}" },
+        { "key": "Timestamp", "value": "{{eventTimestamp}}" }
+      ]
+    },
+    {
+      "type": "ActionBar",
+      "actions": [
+        {
+          "type": "CommandButton",
+          "label": "View Raw Event",
+          "intent": "GET /events/{{eventId}}"
+        }
+      ]
+    }
+  ]
+}

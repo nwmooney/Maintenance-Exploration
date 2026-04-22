@@ -1,0 +1,17 @@
+{
+  "type": "surface",
+  "id": "pm_completed_surface",
+  "components": [
+    {
+      "type": "CMXCard",
+      "title": "Preventive Maintenance Completed",
+      "status": "Completed",
+      "assetId": "{{assetId}}",
+      "summary": "{{pmType}} completed successfully"
+    },
+    {
+      "type": "Timeline",
+      "events": "{{completionTimeline}}"
+    }
+  ]
+}

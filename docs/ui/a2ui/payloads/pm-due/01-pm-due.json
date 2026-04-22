@@ -1,0 +1,36 @@
+{
+  "type": "surface",
+  "id": "pm_due_surface",
+  "components": [
+    {
+      "type": "CMXCard",
+      "title": "Preventive Maintenance Due",
+      "status": "Open",
+      "assetId": "{{assetId}}",
+      "summary": "{{pmType}} due in {{dueInMilesOrDays}}"
+    },
+    {
+      "type": "KeyValueList",
+      "entries": [
+        { "key": "Maintenance Item", "value": "{{pmType}}" },
+        { "key": "Due At", "value": "{{dueThreshold}}" },
+        { "key": "Current Reading", "value": "{{currentReading}}" }
+      ]
+    },
+    {
+      "type": "ActionBar",
+      "actions": [
+        {
+          "type": "CommandButton",
+          "label": "Create Work Order",
+          "intent": "POST /work-orders/drafts"
+        },
+        {
+          "type": "CommandButton",
+          "label": "Snooze",
+          "intent": "POST /pm/{{pmId}}/snooze"
+        }
+      ]
+    }
+  ]
+}

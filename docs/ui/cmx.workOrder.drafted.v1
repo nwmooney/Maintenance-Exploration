@@ -1,0 +1,55 @@
+{
+  "type": "surface",
+  "id": "wo_draft_surface",
+  "components": [
+    {
+      "id": "wo_summary",
+      "type": "card",
+      "data": {
+        "title": "Draft Work Order",
+        "status": "Draft",
+        "asset": "{{assetId}}",
+        "scope": "{{summary}}"
+      }
+    },
+    {
+      "id": "wo_recommendations",
+      "type": "list",
+      "data": {
+        "title": "Suggested Scope",
+        "items": "{{recommendedActions}}"
+      }
+    },
+    {
+      "id": "wo_actions",
+      "type": "action_bar",
+      "children": [
+        {
+          "id": "submit_for_approval",
+          "type": "button",
+          "data": {
+            "label": "Submit for Approval",
+            "intent": "POST /work-orders/{{workOrderId}}/submit"
+          }
+        },
+        {
+          "id": "edit_scope",
+          "type": "button",
+          "data": {
+            "label": "Edit Scope",
+            "intent": "NAVIGATE",
+            "target": "wo_edit"
+          }
+        },
+        {
+          "id": "cancel_draft",
+          "type": "button",
+          "data": {
+            "label": "Cancel",
+            "intent": "POST /work-orders/{{workOrderId}}/cancel"
+          }
+        }
+      ]
+    }
+  ]
+}

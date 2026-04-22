@@ -1,0 +1,36 @@
+{
+  "type": "surface",
+  "id": "invoice_exception_under_review_surface",
+  "components": [
+    {
+      "type": "CMXCard",
+      "title": "Invoice Exception Under Review",
+      "status": "Open",
+      "assetId": "{{assetId}}",
+      "summary": "Invoice {{invoiceNumber}} is being reviewed"
+    },
+    {
+      "type": "KeyValueList",
+      "entries": [
+        { "key": "Exception Type", "value": "{{exceptionType}}" },
+        { "key": "Assigned To", "value": "{{assignedTo}}" },
+        { "key": "Received On", "value": "{{receivedDate}}" }
+      ]
+    },
+    {
+      "type": "ActionBar",
+      "actions": [
+        {
+          "type": "CommandButton",
+          "label": "Request Documentation",
+          "intent": "POST /exceptions/{{exceptionId}}/request-docs"
+        },
+        {
+          "type": "CommandButton",
+          "label": "Dispute Invoice",
+          "intent": "POST /invoices/{{invoiceId}}/dispute"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "type": "surface",
+  "id": "approval_required_surface",
+  "components": [
+    {
+      "type": "CMXCard",
+      "title": "Approval Required",
+      "status": "NeedsApproval",
+      "assetId": "{{assetId}}",
+      "summary": "{{policyReason}}"
+    },
+    {
+      "type": "KeyValueList",
+      "entries": [
+        { "key": "Estimated Cost", "value": "{{estimatedCost}}" },
+        { "key": "Severity", "value": "{{severity}}" },
+        { "key": "Recommendation", "value": "{{recommendation}}" }
+      ]
+    },
+    {
+      "type": "ActionBar",
+      "actions": [
+        {
+          "type": "CommandButton",
+          "label": "Approve",
+          "intent": "POST /work-orders/{{workOrderId}}/approve"
+        },
+        {
+          "type": "CommandButton",
+          "label": "Reject",
+          "intent": "POST /work-orders/{{workOrderId}}/reject"
+        }
+      ]
+    }
+  ]
+}

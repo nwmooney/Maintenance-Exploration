@@ -1,0 +1,35 @@
+{
+  "type": "surface",
+  "id": "invoice_exception_resolution_required_surface",
+  "components": [
+    {
+      "type": "CMXCard",
+      "title": "Invoice Exception Requires Action",
+      "status": "NeedsApproval",
+      "assetId": "{{assetId}}",
+      "summary": "Resolution required for invoice {{invoiceNumber}}"
+    },
+    {
+      "type": "KeyValueList",
+      "entries": [
+        { "key": "Proposed Resolution", "value": "{{resolutionProposal}}" },
+        { "key": "Adjusted Amount", "value": "{{adjustedAmount}}" }
+      ]
+    },
+    {
+      "type": "ActionBar",
+      "actions": [
+        {
+          "type": "CommandButton",
+          "label": "Approve Resolution",
+          "intent": "POST /exceptions/{{exceptionId}}/approve"
+        },
+        {
+          "type": "CommandButton",
+          "label": "Reject Resolution",
+          "intent": "POST /exceptions/{{exceptionId}}/reject"
+        }
+      ]
+    }
+  ]
+}

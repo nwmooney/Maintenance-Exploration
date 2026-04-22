@@ -1,0 +1,37 @@
+{
+  "type": "surface",
+  "id": "invoice_exception_detected_surface",
+  "components": [
+    {
+      "type": "CMXCard",
+      "title": "Invoice Exception Detected",
+      "status": "Exception",
+      "assetId": "{{assetId}}",
+      "summary": "Invoice {{invoiceNumber}} failed validation"
+    },
+    {
+      "type": "KeyValueList",
+      "entries": [
+        { "key": "Invoice Number", "value": "{{invoiceNumber}}" },
+        { "key": "Vendor", "value": "{{vendorName}}" },
+        { "key": "Exception Type", "value": "{{exceptionType}}" },
+        { "key": "Amount", "value": "{{invoiceAmount}}" }
+      ]
+    },
+    {
+      "type": "ActionBar",
+      "actions": [
+        {
+          "type": "CommandButton",
+          "label": "View Invoice",
+          "intent": "GET /invoices/{{invoiceId}}"
+        },
+        {
+          "type": "CommandButton",
+          "label": "Resolve Exception",
+          "intent": "POST /exceptions/{{exceptionId}}/resolve"
+        }
+      ]
+    }
+  ]
+}

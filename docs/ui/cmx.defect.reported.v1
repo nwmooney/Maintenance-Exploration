@@ -1,0 +1,52 @@
+{
+  "type": "surface",
+  "id": "defect_new_surface",
+  "components": [
+    {
+      "id": "defect_card",
+      "type": "card",
+      "data": {
+        "title": "New Defect Reported",
+        "subtitle": "Asset {{assetId}}",
+        "status": "New Issue",
+        "severity": "{{severity}}",
+        "timestamp": "{{reportedAt}}",
+        "source": "{{reportedBy.type}}"
+      }
+    },
+    {
+      "id": "defect_actions",
+      "type": "action_bar",
+      "children": [
+        {
+          "id": "convert_to_wo",
+          "type": "button",
+          "data": {
+            "label": "Create Work Order",
+            "intent": "POST /work-orders/drafts",
+            "payload": {
+              "defectId": "{{defectId}}"
+            }
+          }
+        },
+        {
+          "id": "view_details",
+          "type": "button",
+          "data": {
+            "label": "View Details",
+            "intent": "NAVIGATE",
+            "target": "defect_detail"
+          }
+        },
+        {
+          "id": "snooze",
+          "type": "button",
+          "data": {
+            "label": "Snooze",
+            "intent": "POST /defects/{{defectId}}/snooze"
+          }
+        }
+      ]
+    }
+  ]
+}

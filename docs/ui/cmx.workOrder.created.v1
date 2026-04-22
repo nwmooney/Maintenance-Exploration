@@ -1,0 +1,39 @@
+{
+  "type": "surface",
+  "id": "wo_active_surface",
+  "components": [
+    {
+      "id": "wo_active_card",
+      "type": "card",
+      "data": {
+        "title": "Work Order Active",
+        "status": "Open",
+        "asset": "{{assetId}}",
+        "workOrderId": "{{workOrderId}}"
+      }
+    },
+    {
+      "id": "wo_actions",
+      "type": "action_bar",
+      "children": [
+        {
+          "id": "assign",
+          "type": "button",
+          "data": {
+            "label": "Assign Technician",
+            "intent": "POST /work-orders/{{workOrderId}}/assign"
+          }
+        },
+        {
+          "id": "schedule",
+          "type": "button",
+          "data": {
+            "label": "Schedule",
+            "intent": "POST /work-orders/{{workOrderId}}/schedule"
+          }
+        }
+      ]
+    }
+  ]
+}
+``

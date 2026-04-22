@@ -1,0 +1,32 @@
+{
+  "type": "surface",
+  "id": "pm_wo_draft_surface",
+  "components": [
+    {
+      "type": "CMXCard",
+      "title": "PM Work Order Draft",
+      "status": "Draft",
+      "assetId": "{{assetId}}",
+      "summary": "{{pmType}} preventive maintenance"
+    },
+    {
+      "type": "CMXList",
+      "items": "{{pmChecklistItems}}"
+    },
+    {
+      "type": "ActionBar",
+      "actions": [
+        {
+          "type": "CommandButton",
+          "label": "Submit for Approval",
+          "intent": "POST /work-orders/{{workOrderId}}/submit"
+        },
+        {
+          "type": "CommandButton",
+          "label": "Edit Scope",
+          "intent": "GET /work-orders/{{workOrderId}}"
+        }
+      ]
+    }
+  ]
+}

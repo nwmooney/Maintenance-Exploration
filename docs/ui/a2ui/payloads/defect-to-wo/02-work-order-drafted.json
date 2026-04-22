@@ -1,0 +1,37 @@
+{
+  "type": "surface",
+  "id": "wo_draft_surface",
+  "components": [
+    {
+      "type": "CMXCard",
+      "title": "Draft Work Order",
+      "status": "Draft",
+      "assetId": "{{assetId}}",
+      "summary": "{{workOrderSummary}}"
+    },
+    {
+      "type": "CMXList",
+      "items": "{{recommendedActions}}"
+    },
+    {
+      "type": "ActionBar",
+      "actions": [
+        {
+          "type": "CommandButton",
+          "label": "Submit for Approval",
+          "intent": "POST /work-orders/{{workOrderId}}/submit"
+        },
+        {
+          "type": "CommandButton",
+          "label": "Edit Scope",
+          "intent": "GET /work-orders/{{workOrderId}}"
+        },
+        {
+          "type": "CommandButton",
+          "label": "Cancel Draft",
+          "intent": "POST /work-orders/{{workOrderId}}/cancel"
+        }
+      ]
+    }
+  ]
+}

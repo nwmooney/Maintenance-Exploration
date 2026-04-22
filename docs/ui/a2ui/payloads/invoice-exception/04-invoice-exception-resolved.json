@@ -1,0 +1,17 @@
+{
+  "type": "surface",
+  "id": "invoice_exception_resolved_surface",
+  "components": [
+    {
+      "type": "CMXCard",
+      "title": "Invoice Exception Resolved",
+      "status": "Completed",
+      "assetId": "{{assetId}}",
+      "summary": "Invoice {{invoiceNumber}} exception resolved"
+    },
+    {
+      "type": "Timeline",
+      "events": "{{resolutionTimeline}}"
+    }
+  ]
+}
