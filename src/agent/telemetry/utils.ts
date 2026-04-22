@@ -1,4 +1,4 @@
-import crypto from "crypto";
+import { createHash } from "crypto";
 import { Environment, FlowCategory } from "./types";
 
 export function detectEnvironment(): Environment {
@@ -9,7 +9,7 @@ export function detectEnvironment(): Environment {
 
 export function hashId(value?: string): string | undefined {
   if (!value) return undefined;
-  return crypto.createHash("sha256").update(value).digest("hex");
+  return createHash("sha256").update(value).digest("hex");
 }
 
 export function inferFlowCategory(eventType: string): FlowCategory {
